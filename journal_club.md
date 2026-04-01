@@ -173,7 +173,7 @@ result = response.choices[0].message.parsed  # already a PromotionList object
 - At inference time, the provider uses **constrained decoding** (also called grammar-guided generation):
   - At each token generation step, tokens that would violate the schema are masked out
   - The model can only produce tokens that lead to valid JSON matching your schema
-- This is why it's **guaranteed** -- it's not just "asking nicely," it's mechanically enforced
+- This is why it's **guaranteed**
 
 ### What About Pydantic?
 
@@ -183,7 +183,7 @@ result = response.choices[0].message.parsed  # already a PromotionList object
 
 ---
 
-## 3. Function Calling: Giving the LLM Abilities
+## 3. Function Calling
 
 ### LLMs Are Stateless
 
@@ -301,19 +301,6 @@ sequenceDiagram
 
     LLM-->>Agent: "Done. I added try/except blocks to the parse function..."
     Agent->>Dev: Display summary
-```
-
-### The Complete Agent Loop
-
-```mermaid
-flowchart TD
-    A[Developer types a request] --> B[Agent sends message + tools to LLM]
-    B --> C{LLM response type?}
-    C -->|Tool call| D[Agent executes the tool locally]
-    D --> E[Send tool result back to LLM]
-    E --> B
-    C -->|Text response| F[Display answer to developer]
-    F --> A
 ```
 
 - The loop continues until the model decides it's done and returns a text response instead of a tool call
